@@ -7,14 +7,10 @@ if (F) {
   str(store)
   str(test)
   str(train)
-  
-  # Issues.
-  # 1. holiday detail.
-  # 2(optional). Social events (twitter / facebook).
-  # 3. digitalizing "Date" field.
 }
 
-if (T) {
+# Data processing --------------------------------------------------
+if (F) {
   train.X <- subset(train, select = -c(Store, Sales, StateHoliday))
   train.Y <- train[, "Sales"]
   
@@ -28,11 +24,26 @@ if (T) {
   
   # Scatter plot of all variables.
   require(caret)
-  featurePlot(x = subset(train.X, select = -c(Date)),
-              y = train.Y,
+  slice.index <- sample(1:nrow(train.X), 10000)
+  featurePlot(x = subset(train.X, select = -c(Date))[slice.index, ],
+              y = train.Y[slice.index],
               plot = "scatter",
               type = c("p", "smooth"),
               span = .5,
               layout = c(2, 4)
               )
+}
+
+# Feature engineering ------------------------------------------------
+# 1. Date
+# 1a. weekday/weekend
+# 1b. proceeding day
+# 1c. Promotion days.
+# 2. Store: store type, assortment, competition
+# 3. Promotion.
+# 3a. If correlation with Holiday.
+# 4. Open: if Open = 0, Sales = 0.
+# 5. Customers: removed in test dataset.
+if (T) {
+   
 }
