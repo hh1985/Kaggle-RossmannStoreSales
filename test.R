@@ -8,19 +8,27 @@ if (F) {
   str(test)
   str(train)
   
-  # Introduce extra data.
+  # Issues.
   # 1. holiday detail.
-  # 2. Social events (twitter / facebook).
-  # 
+  # 2(optional). Social events (twitter / facebook).
+  # 3. digitalizing "Date" field.
 }
 
 if (T) {
-  train.X <- subset(train, select = -c(Store, Sales))
-  train.Y <- subset(train, select = Sales)
+  train.X <- subset(train, select = -c(Store, Sales, StateHoliday))
+  train.Y <- train[, "Sales"]
+  
+  # dummy variable.
+  #state.holiday.f <- factor(train.X$StateHoliday)
+  #dummies <- model.matrix(~state.holiday.f)
+  #dummies = table(1:length(train.X$StateHoliday),as.factor(train.X$StateHoliday))
+  #dummies <- as.data.frame(dummies)
+  require(dummies)
+  train.X <- cbind(train.X, dummy("StateHoliday", train)[, -1])
   
   # Scatter plot of all variables.
   require(caret)
-  featurePlot(x = train.X,
+  featurePlot(x = subset(train.X, select = -c(Date)),
               y = train.Y,
               plot = "scatter",
               type = c("p", "smooth"),
