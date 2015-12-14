@@ -82,7 +82,7 @@ if (F) {
                  max.depth = 8,
                  eta = 1,
                  nfold = 5,
-                 nthread = 2,
+                 nthread = 4,
                  nround = 5000,
                  objective = "reg:linear",
                  maximize = FALSE,
